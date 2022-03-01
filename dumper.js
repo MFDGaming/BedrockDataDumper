@@ -1,20 +1,20 @@
 /* eslint-disable */
 
 const fs = require('fs');
-const bedrock = require('bedrock-protocol')
+const bedrock = require('bedrock-protocol');
 const client = bedrock.createClient({
   host: '0.0.0.0',
   port: 19132,
   username: 'testman',
   offline: true
-})
+});
 
 client.on('start_game', (packet) => {
     fs.writeFile("item_states.json", JSON.stringify(packet["itemstates"], 0, 4), function (err) {
         if (err) return console.log(err);
         console.log("Wrote item_states.json");
     });
-})
+});
 
 client.on('packet', (packet) => {
     if (packet["data"]["name"] == "creative_content") {
@@ -33,4 +33,4 @@ client.on('packet', (packet) => {
             console.log("Wrote available_entity_identifiers.nbt");
         });
     }
-})
+});
